@@ -1,0 +1,3 @@
+subsequence([],[]).
+subsequence([X|Xs],[X|Ys]) :- subsequence(Xs,Ys).
+subsequence(Xs,[_|Ys]) :- subsequence(Xs,Ys).

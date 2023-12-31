@@ -1,0 +1,27 @@
+can_go(P1,_) :- P1 \= 'Alice', P1 \= 'Bob'.
+can_go(P1,P2) :- P1 = 'Bob', P2 = 'Carol'.
+
+row_R_to_L([],_,B,B,P,P) :- member('Alice',P), member('Carol',P),!, member('Bob',P), member('Davis',P).
+row_R_to_L(L,R,BAcc,B,PAcc,P) :-
+    select(X,R,R1),
+    row_L_to_R([X|L],R1,[[X]|BAcc],B,[X|PAcc],P).
+
+
+row_L_to_R(L,R,BAcc,B,PAcc,P) :-
+    select(X,L,L1),
+    select(Y,L1,L2),
+    X \= Y,
+    can_go(X,Y),
+    row_R_to_L(L2,[X,Y|R],[[X,Y]|BAcc],B,[X|PAcc],P).
+    
+findTwice([H|T],Tw) :- Tw=H,member(Tw,T).
+findTwice([_|T],Tw) :- findTwice(T,Tw).
+
+printList([]).
+printList([H|T]) :- printList(T), nl, write(H).
+
+abcd() :-
+    row_L_to_R(['Alice','Bob','Carol','Davis'],[],[],B,[],P),
+    findTwice(P,Tw),
+    write('Twice: '), write(Tw), nl,
+    write('Crossings: '), printList(B).

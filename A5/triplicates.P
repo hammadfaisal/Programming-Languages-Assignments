@@ -1,0 +1,14 @@
+count([],_,N,N).
+count([H|T],A,N,R):-
+    H=A,
+    N1 is N+1,
+    count(T,A,N1,R).
+count([H|T],A,N,R):-
+    H\=A,
+    count(T,A,N,R).
+
+has_no_triplicates([]).
+has_no_triplicates([H|T]):-
+    count(T,H,1,R),
+    R<3,
+    has_no_triplicates(T).

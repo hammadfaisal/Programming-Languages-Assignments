@@ -1,0 +1,576 @@
+
+state 0:
+
+	START : . EXP 
+	START : . SHFR 
+	START : . SHDEC 
+	START : . EXIT 
+	START : . ID 
+	START : .  (reduce by rule 5)
+
+	ID	shift 11
+	INT	shift 10
+	PLUS	shift 9
+	SEMI	reduce by rule 5
+	LPAR	shift 8
+	NEG	shift 7
+	DOT	shift 6
+	SHFR	shift 5
+	SHDEC	shift 4
+	EXIT	shift 3
+	EOF	reduce by rule 5
+
+	EXP	goto 2
+	START	goto 39
+	NUM	goto 1
+
+	.	error
+
+
+state 1:
+
+	EXP : NUM .  (reduce by rule 13)
+
+	PLUS	reduce by rule 13
+	MUL	reduce by rule 13
+	SEMI	reduce by rule 13
+	RPAR	reduce by rule 13
+	SUB	reduce by rule 13
+	DIV	reduce by rule 13
+	EOF	reduce by rule 13
+
+
+	.	error
+
+
+state 2:
+
+	EXP : EXP . PLUS EXP 
+	EXP : EXP . SUB EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	START : EXP .  (reduce by rule 0)
+
+	PLUS	shift 15
+	MUL	shift 14
+	SEMI	reduce by rule 0
+	SUB	shift 13
+	DIV	shift 12
+	EOF	reduce by rule 0
+
+
+	.	error
+
+
+state 3:
+
+	START : EXIT .  (reduce by rule 3)
+
+	SEMI	reduce by rule 3
+	EOF	reduce by rule 3
+
+
+	.	error
+
+
+state 4:
+
+	START : SHDEC .  (reduce by rule 2)
+
+	SEMI	reduce by rule 2
+	EOF	reduce by rule 2
+
+
+	.	error
+
+
+state 5:
+
+	START : SHFR .  (reduce by rule 1)
+
+	SEMI	reduce by rule 1
+	EOF	reduce by rule 1
+
+
+	.	error
+
+
+state 6:
+
+	NUM : DOT . INT LPAR INT RPAR 
+	NUM : DOT . LPAR INT RPAR 
+
+	INT	shift 17
+	LPAR	shift 16
+
+
+	.	error
+
+
+state 7:
+
+	EXP : NEG . NUM 
+
+	INT	shift 10
+	DOT	shift 6
+
+	NUM	goto 18
+
+	.	error
+
+
+state 8:
+
+	EXP : LPAR . EXP RPAR 
+
+	INT	shift 10
+	PLUS	shift 9
+	LPAR	shift 8
+	NEG	shift 7
+	DOT	shift 6
+
+	EXP	goto 19
+	NUM	goto 1
+
+	.	error
+
+
+state 9:
+
+	EXP : PLUS . NUM 
+
+	INT	shift 10
+	DOT	shift 6
+
+	NUM	goto 20
+
+	.	error
+
+
+state 10:
+
+	NUM : INT .  (reduce by rule 14)
+	NUM : INT . DOT INT LPAR INT RPAR 
+	NUM : INT . DOT LPAR INT RPAR 
+
+	PLUS	reduce by rule 14
+	MUL	reduce by rule 14
+	SEMI	reduce by rule 14
+	RPAR	reduce by rule 14
+	SUB	reduce by rule 14
+	DIV	reduce by rule 14
+	DOT	shift 21
+	EOF	reduce by rule 14
+
+
+	.	error
+
+
+state 11:
+
+	START : ID .  (reduce by rule 4)
+
+	SEMI	reduce by rule 4
+	EOF	reduce by rule 4
+
+
+	.	error
+
+
+state 12:
+
+	EXP : EXP DIV . EXP 
+
+	INT	shift 10
+	PLUS	shift 9
+	LPAR	shift 8
+	NEG	shift 7
+	DOT	shift 6
+
+	EXP	goto 22
+	NUM	goto 1
+
+	.	error
+
+
+state 13:
+
+	EXP : EXP SUB . EXP 
+
+	INT	shift 10
+	PLUS	shift 9
+	LPAR	shift 8
+	NEG	shift 7
+	DOT	shift 6
+
+	EXP	goto 23
+	NUM	goto 1
+
+	.	error
+
+
+state 14:
+
+	EXP : EXP MUL . EXP 
+
+	INT	shift 10
+	PLUS	shift 9
+	LPAR	shift 8
+	NEG	shift 7
+	DOT	shift 6
+
+	EXP	goto 24
+	NUM	goto 1
+
+	.	error
+
+
+state 15:
+
+	EXP : EXP PLUS . EXP 
+
+	INT	shift 10
+	PLUS	shift 9
+	LPAR	shift 8
+	NEG	shift 7
+	DOT	shift 6
+
+	EXP	goto 25
+	NUM	goto 1
+
+	.	error
+
+
+state 16:
+
+	NUM : DOT LPAR . INT RPAR 
+
+	INT	shift 26
+
+
+	.	error
+
+
+state 17:
+
+	NUM : DOT INT . LPAR INT RPAR 
+
+	LPAR	shift 27
+
+
+	.	error
+
+
+state 18:
+
+	EXP : NEG NUM .  (reduce by rule 12)
+
+	PLUS	reduce by rule 12
+	MUL	reduce by rule 12
+	SEMI	reduce by rule 12
+	RPAR	reduce by rule 12
+	SUB	reduce by rule 12
+	DIV	reduce by rule 12
+	EOF	reduce by rule 12
+
+
+	.	error
+
+
+state 19:
+
+	EXP : EXP . PLUS EXP 
+	EXP : EXP . SUB EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : LPAR EXP . RPAR 
+
+	PLUS	shift 15
+	MUL	shift 14
+	RPAR	shift 28
+	SUB	shift 13
+	DIV	shift 12
+
+
+	.	error
+
+
+state 20:
+
+	EXP : PLUS NUM .  (reduce by rule 11)
+
+	PLUS	reduce by rule 11
+	MUL	reduce by rule 11
+	SEMI	reduce by rule 11
+	RPAR	reduce by rule 11
+	SUB	reduce by rule 11
+	DIV	reduce by rule 11
+	EOF	reduce by rule 11
+
+
+	.	error
+
+
+state 21:
+
+	NUM : INT DOT . INT LPAR INT RPAR 
+	NUM : INT DOT . LPAR INT RPAR 
+
+	INT	shift 30
+	LPAR	shift 29
+
+
+	.	error
+
+
+state 22:
+
+	EXP : EXP . PLUS EXP 
+	EXP : EXP . SUB EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : EXP DIV EXP .  (reduce by rule 9)
+
+	PLUS	reduce by rule 9
+	MUL	reduce by rule 9
+	SEMI	reduce by rule 9
+	RPAR	reduce by rule 9
+	SUB	reduce by rule 9
+	DIV	reduce by rule 9
+	EOF	reduce by rule 9
+
+
+	.	error
+
+
+state 23:
+
+	EXP : EXP . PLUS EXP 
+	EXP : EXP . SUB EXP 
+	EXP : EXP SUB EXP .  (reduce by rule 7)
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+
+	PLUS	reduce by rule 7
+	MUL	shift 14
+	SEMI	reduce by rule 7
+	RPAR	reduce by rule 7
+	SUB	reduce by rule 7
+	DIV	shift 12
+	EOF	reduce by rule 7
+
+
+	.	error
+
+
+state 24:
+
+	EXP : EXP . PLUS EXP 
+	EXP : EXP . SUB EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP MUL EXP .  (reduce by rule 8)
+	EXP : EXP . DIV EXP 
+
+	PLUS	reduce by rule 8
+	MUL	reduce by rule 8
+	SEMI	reduce by rule 8
+	RPAR	reduce by rule 8
+	SUB	reduce by rule 8
+	DIV	reduce by rule 8
+	EOF	reduce by rule 8
+
+
+	.	error
+
+
+state 25:
+
+	EXP : EXP . PLUS EXP 
+	EXP : EXP PLUS EXP .  (reduce by rule 6)
+	EXP : EXP . SUB EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+
+	PLUS	reduce by rule 6
+	MUL	shift 14
+	SEMI	reduce by rule 6
+	RPAR	reduce by rule 6
+	SUB	reduce by rule 6
+	DIV	shift 12
+	EOF	reduce by rule 6
+
+
+	.	error
+
+
+state 26:
+
+	NUM : DOT LPAR INT . RPAR 
+
+	RPAR	shift 31
+
+
+	.	error
+
+
+state 27:
+
+	NUM : DOT INT LPAR . INT RPAR 
+
+	INT	shift 32
+
+
+	.	error
+
+
+state 28:
+
+	EXP : LPAR EXP RPAR .  (reduce by rule 10)
+
+	PLUS	reduce by rule 10
+	MUL	reduce by rule 10
+	SEMI	reduce by rule 10
+	RPAR	reduce by rule 10
+	SUB	reduce by rule 10
+	DIV	reduce by rule 10
+	EOF	reduce by rule 10
+
+
+	.	error
+
+
+state 29:
+
+	NUM : INT DOT LPAR . INT RPAR 
+
+	INT	shift 33
+
+
+	.	error
+
+
+state 30:
+
+	NUM : INT DOT INT . LPAR INT RPAR 
+
+	LPAR	shift 34
+
+
+	.	error
+
+
+state 31:
+
+	NUM : DOT LPAR INT RPAR .  (reduce by rule 18)
+
+	PLUS	reduce by rule 18
+	MUL	reduce by rule 18
+	SEMI	reduce by rule 18
+	RPAR	reduce by rule 18
+	SUB	reduce by rule 18
+	DIV	reduce by rule 18
+	EOF	reduce by rule 18
+
+
+	.	error
+
+
+state 32:
+
+	NUM : DOT INT LPAR INT . RPAR 
+
+	RPAR	shift 35
+
+
+	.	error
+
+
+state 33:
+
+	NUM : INT DOT LPAR INT . RPAR 
+
+	RPAR	shift 36
+
+
+	.	error
+
+
+state 34:
+
+	NUM : INT DOT INT LPAR . INT RPAR 
+
+	INT	shift 37
+
+
+	.	error
+
+
+state 35:
+
+	NUM : DOT INT LPAR INT RPAR .  (reduce by rule 17)
+
+	PLUS	reduce by rule 17
+	MUL	reduce by rule 17
+	SEMI	reduce by rule 17
+	RPAR	reduce by rule 17
+	SUB	reduce by rule 17
+	DIV	reduce by rule 17
+	EOF	reduce by rule 17
+
+
+	.	error
+
+
+state 36:
+
+	NUM : INT DOT LPAR INT RPAR .  (reduce by rule 16)
+
+	PLUS	reduce by rule 16
+	MUL	reduce by rule 16
+	SEMI	reduce by rule 16
+	RPAR	reduce by rule 16
+	SUB	reduce by rule 16
+	DIV	reduce by rule 16
+	EOF	reduce by rule 16
+
+
+	.	error
+
+
+state 37:
+
+	NUM : INT DOT INT LPAR INT . RPAR 
+
+	RPAR	shift 38
+
+
+	.	error
+
+
+state 38:
+
+	NUM : INT DOT INT LPAR INT RPAR .  (reduce by rule 15)
+
+	PLUS	reduce by rule 15
+	MUL	reduce by rule 15
+	SEMI	reduce by rule 15
+	RPAR	reduce by rule 15
+	SUB	reduce by rule 15
+	DIV	reduce by rule 15
+	EOF	reduce by rule 15
+
+
+	.	error
+
+
+state 39:
+
+
+	SEMI	accept
+	EOF	accept
+
+
+	.	error
+
+145 of 207 action table entries left after compaction
+15 goto table entries

@@ -1,0 +1,34 @@
+
+form([],N,N,L,L).
+form([H|T],N,Acc,L,Res):-
+    nonvar(H),
+    Acc1 is Acc+H,
+    form(T,N,Acc1,['+'|L],Res).
+form([H|T],N,Acc,L,Res):-
+    nonvar(H),
+    Acc1 is Acc-H,
+    form(T,N,Acc1,['-'|L],Res).
+
+writeAlternate([],[]).
+writeAlternate([H|T],A):-
+    write(H),
+    write(' '),
+    writeAlternate(A,T).
+
+reverse([],Z,Z).
+reverse([H|T],Z,Acc) :-
+    reverse(T,Z,[H|Acc]).
+
+arith(_,[]) :- false.
+arith(A,[H|B]) :-
+    form(A,S,0,[],Op1),
+    form(B,S,H,[],Op2),
+    reverse(Op2,Op3,[]),
+    reverse(A,L1,[]),
+    writeAlternate(Op1,L1),
+    write('= '),
+    writeAlternate([H|B],Op3).
+arith(A,[H|B]) :-
+    arith([H|A],B).
+
+arith([H|T]) :- arith([H],T).
